@@ -1,0 +1,142 @@
+\documentclass[11pt]{scrartcl}
+\usepackage{ucs}
+\usepackage{float}
+\usepackage[utf8x]{inputenc}
+\usepackage{ngerman}
+\usepackage{amsmath,amssymb,amstext}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[square]{natbib}
+\usepackage[justification=RaggedRight, singlelinecheck=false]{caption} 
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\lfoot{Philipp Adler}
+\rfoot{\today{}}
+
+\title{Sicherheit}
+\author{Philipp Adler}
+\date{\today{}}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\pagebreak
+
+\section{Grundlagen Securityverfahren}
+\label{sec:basics-security-process}
+Moderne Kryptographie 2
+
+\subsection{Verschlüsselungsarten}
+\label{sec:ciphering types}
+
+\subsection{Kommunikationsszenarien}
+\label{sec:communication-scenarios}
+
+\subsection{Sicherheitsziele}
+\label{sec:security goals}
+
+\subsection{Bedrohungsszenarien}
+\label{sec:threat scenarios}
+
+
+\section{Symmetrische Verschlüsselung}
+\label{sec:symetric-ciphering}
+
+\subsection{Blockchiffre}
+\label{sec:blockchiffre}
+Praktische Kryptographie unter Linux 2.3\\
+Sicherheit und Kryptographie im Internet 1.4.2
+
+\subsubsection{Der Data Encryption Standard - DES}
+\label{sec:data-encryotion-standard}
+Kryptografie in Theorie und Praxis 7.6\\
+Kryptograhie und IT-Sicherheit 2.2\\
+Verteilte Systeme S.427
+
+\subsubsection{Der Advanced Encryption Standard - AES}
+\label{sec:advanced-encryotion-standard}
+Kryptografie in Theorie und Praxis 7.7\\
+Kryptograhie und IT-Sicherheit 2.6\\
+Moderne Kryptographie 4.5
+
+\subsubsection{IDEA (International Data Encryption Algorithm)}
+\label{sec:international-data-encryption-algorithm}
+Kryptograhie und IT-Sicherheit 2.3
+
+\subsection{Der RSA-Algorithmus}
+\label{sec:rsa-algorithmus}
+Praktische Kryptographie unter Linux 2.4.3\\
+Kryptografie in Theorie und Praxis 10\\
+Kryptologie 5.3.4\\
+Kryptograhie und IT-Sicherheit 4.2\\
+Moderne Kryptographie 6.4\\
+Sicherheit und Kryptographie im Internet 1.5.4\\
+Verteilte Systeme S.430
+
+\subsubsection{Schlüsselerzeugung}
+\label{sec:key-generation}
+
+\subsubsection{Verschlüsseln}
+\label{sec:rsa-encrypt}
+
+\subsubsection{Entschlüsseln}
+\label{sec:rsa-decrypt}
+
+\section{SSL/TLS-Protokoll}
+\label{sec:ssl/tls-protocol}
+Praktische Kryptographie unter Linux 8.1\\
+Kryptograhie und IT-Sicherheit 6.3\\
+Sicherheit und Kryptographie im Internet 7.7/7.9\\
+Verteilte Systeme S.626
+
+\subsection{SSL/TLS Grundlagen}
+\label{sec:ssl-tls-basics}
+
+\subsection{SSL/TLS im Protokollstapel}
+\label{sec:ssl-tls-protocolstack}
+
+\subsection{Client-Server-Kommunikation}
+\label{sec:client-server-communication}
+
+
+\subsection{Das SSL-Handshake}
+\label{sec:ssl-handshake}
+
+\subsection{TLS asymetrisch}
+\label{sec:tls-asymetric}
+
+\subsection{TLS symetrisch}
+\label{sec:tls-symetric}
+
+\subsection{TLS hybrid}
+\label{sec:tls-hybrid}
+
+\subsection{TLS Algorithmen}
+\label{sec:tls-algorithmen}
+
+
+\section{Schwierigkeiten bei Software}
+\label{sec:sw-trouble}
+
+\subsection{Buffer Ovrflow}
+\label{sec:buffer-overflow}
+Improving Intrusion Detection Systems 4.3\\
+Network Intrusion Detection and Prevention 1.3.1
+
+\subsection{OpenSSL}
+\label{sec:openssl}
+Praktische Kryptographie unter Linux 8.2\\
+Sicherheit und Kryptographie im Internet 7.10
+
+\newpage
+\listoffigures
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+\mbox{}
+\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{literatur}
+
+\end{document}
