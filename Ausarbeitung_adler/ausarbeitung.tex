@@ -116,8 +116,34 @@ Beim AES wird der Text und die Ergebnisse als Bytes in eine 4x4-Matrix, in sogen
 	\label{fig7}
 \end{figure}
 \noindent
-Wie auch DES eine Rundenfunktion besitzt, hat AES ebenfalls eine. Diese besteht aus SubBytes, ShiftRow, MixColumn und AddRoundKey. ??? 2.S.85
-\cite{2}
+Wie auch DES eine Rundenfunktion besitzt, hat AES ebenfalls eine. Diese besteht aus SubBytes, ShiftRow, MixColumn und AddRoundKey.\\
+Beim SubBytes werden die States substituiert. Zuerst wird das Eingangsbyte durch die gebildete Inverse a{\tiny r,c} ersetzt.
+\grqq{}Entscheidend für das Verständnis des AES ist, dass die Bytes als Elemente des Körpers \textit{GF}(2\textsuperscript{8}) aufgefasst werden.\grqq{}\citep{2} Dadurch ist es möglich Bytes zu addieren und multiplizieren. Dieser Körper wird durch Polynome in Form als \textit{GF}(2)[\textit{x}]/(\textit{x}\textsuperscript{8} + \textit{x}\textsuperscript{4} + \textit{x}\textsuperscript{3} + \textit{x} + \textit{1}) dargestellt. Für die Berechnung wird das Byte in Bits dargestellt und einem Polynom zugeordnet. Es wird dann nicht mehr mit Bytes gerechnet sondern mit Polynomen.\\
+\textit{{10100010} = x\textsuperscript{8} + x\textsuperscript{6} + x}
+Der neue State wird mit einer 8x8 Matrix mod 2 multipliziert. Daraus ergibt sich ein Byte großer Ergebnisvektor der zum Schluss mit der Konstante GF(2\textsuperscript{8}) addiert wird. Vorteil an diesem Algorithmus ist das die Bildung der Inverse eines Bytes nichtlinear ist, was die Analyse des AES erschwert.\cite{2}\cite{3}\\
+\begin{figure}[H]
+\includegraphics[width=0.40\textwidth]{Bilder/AES/AES_SubBytes}
+	\caption{Die Abbildung SubBytes \citep{2}}
+	\label{fig8}
+\end{figure}
+\noindent
+ShiftRow und MixColumn stellen die Permutation der Rundenfunktion dar. Wobei ShiftRow zeilenweise operiert und MixColumn spaltenweise. Beim ShiftRow besteht die Permutation aus einem Linksshift, welcher von der Blocklänge abhängig ist. Ausgenommen ist die erste Zeile, weil diese nie verschoben wird. Ansonsten wird die 2.Zeile um C1 Bytes, die 3.Zeile um C2 und die 4.Zeile um C3 Bytes verschoben. Falls die Blocklänge 128 Bit beträgt, wird wie folgt nach Links geshiftet.\cite{2}
+\begin{figure}[H]
+\includegraphics[width=0.40\textwidth]{Bilder/AES/AES_ShiftRow}
+	\caption{Die Abbildung ShiftRow \citep{2}}
+	\label{fig9}
+\end{figure}
+\noindent
+Wie schon oben erwähnt kümmert sich der MixColumn um die Spalten, welche aus 4 Byte bestehen, die wie bei SubBytes als Polynom dargestellt werden. Da wir hier nur 4 Byte haben, ist der Grad kleiner gleich 3. Das daraus erzeugte Polynom wird mit einer Konstante mod (x\textsuperscript{4} + 1) multipliziert.\cite{2}
+\begin{figure}[H]
+\includegraphics[width=0.40\textwidth]{Bilder/AES/AES_MixColumn}
+	\caption{Die Abbildung MixColumn \citep{2}}
+	\label{fig10}
+\end{figure}
+\noindent
+AddRoundKey wird vor Beginn der Runden und am Ende jeder Runde eingesetzt. Um den aktuelle Rundenschlüssel und der Block mittels einer XOR-Verknüpfung addiert. Der Rundenschlüssel wird durch die Formel (Rundenanzahl + 1) * (Anzahl der Wörter pro Matrix) hergeleitet. Da bei 128 Bit mehr Bits zur Verfügung stehen als benötigt werden, muss der Schlüssel expandiert werden. Bei der Expansion wird der externe Schlüssel in seine Bestandteile zerlegt, was im Falle von 128 Bit 4 Wörter sind. Dabei wird i und i+3 mittels XOR verknüpft.\\
+In jeder neuen Runde werden andere Rundenschlüssel verwendet, indem man in der Ersten die ersten vier Wörter und in den nächsten die nächsten vier verwendet.\citep{2}
+
 % Kryptografie in Theorie und Praxis 7.7
 % Kryptograhie und IT-Sicherheit 2.6
 
@@ -125,26 +151,48 @@ Wie auch DES eine Rundenfunktion besitzt, hat AES ebenfalls eine. Diese besteht 
 
 \subsubsection{IDEA (International Data Encryption Algorithm)}
 \label{sec:international-data-encryption-algorithm}
+Der International Data Encryption Algorithm ist ebenfalls wie DES und AES eine symmetrische Block-Chiffre, welche aus einer Blocklänge von jeweils 64 Bit und einer Schlüssellänge von 128 Bit besteht.\citep{3}
+
+\noindent \textbf{Das Schema}\\
+Das IDEA besteht aus 9 Runden, wobei die ersten 8 Runden alle den gleichen Vorgang ausführen. Der Klartext bestehend aus 64 Bit wird in 4 Blöcke aufgespalten. Der erste und letzte Block wird mit einem Teilschlüssel modulo (2\textsuperscript{16} + 1) multipliziert, weil da immer ein Rest auftretet, da es sich um eine Primzahl handelt. Die inneren Blöcke werden stattdessen modulo (2\textsuperscript{16}) addiert. In der Mitte des Schemas werden 2 andere Teilschlüssel eingesetzt, welche die Ergbnisse von oben addieren oder multiplizieren. Am Ende jeder Runde werden die innen Ausgänge vertauscht. Da in jeder Runde ein anderer Klartext zum Einsatz kommt, werden auch andere Teilschlüssel angewandt. \grqq{} Aus den Primärschlüssel werden 52 Teilschlüssel von 16 Bit Länge erzeugt, von denen je sechs in acht Runden zum Einsatz kommen.\grqq{}\citep{6}
+Da die ersten 8 Runden nun beschrieben wurden, kommen wir zur letzten. Bei der 9ten Runden wird der Hauptteil des Verschlüsselungsschemas ausgelassen, dagegen werden 4 Teilschlüssel k{\scriptsize 9,1}, k{\scriptsize 9,2}, k{\scriptsize 9,3}, k{\scriptsize 9,4} eingesetzt.\citep{3}\citep{6}
+\begin{figure}[H]
+\includegraphics[width=0.40\textwidth]{Bilder/IDEA/IDEA_Schema}
+	\caption{IDEA Schema \citep{3}}
+	\label{fig11}
+\end{figure}
+\noindent
+Die Entschlüsselung funktioniert wird die Verschlüsselung nur in andere Richtung, nur die Teilschlüssel k{\scriptsize 9,x} werden invertiert. \citep{3}
 % Kryptograhie und IT-Sicherheit 2.3
 
 \subsection{Der RSA-Algorithmus}
 \label{sec:rsa-algorithmus}
-% Praktische Kryptographie unter Linux 2.4.3
-% Kryptografie in Theorie und Praxis 10
-% Kryptologie 5.3.4
-% Kryptograhie und IT-Sicherheit 4.2
-% Moderne Kryptographie 6.4
-% Sicherheit und Kryptographie im Internet 1.5.4
-% Verteilte Systeme S.430
+Eines der bekanntesten Public-Key-Verfahren ist der RSA-Algorithmus. Entwickelt wurde es 1977 von Rivest, Shamir, Aleman. Das Verfahren beruht auf der Schwierigkeit der Faktorisierung von Zahlen, der sogenannte Satz von Euler. Beim RSA wird ein Nachrichtenblock als Zahl interpretiert, welche kleiner als modula \textit{n} ist. \citep{2}
+% 6.Praktische Kryptographie unter Linux 2.4.3
+% 2.Kryptografie in Theorie und Praxis 10
+% 3.Kryptograhie und IT-Sicherheit 4.2
+% 5.Moderne Kryptographie 6.4
+% 1.Sicherheit und Kryptographie im Internet 1.5.4
 
 \subsubsection{Schlüsselerzeugung}
 \label{sec:key-generation}
-
+Für die Erzeugung des Schlüssels \textit{n} benötigt man das Produkt von zwei Primzahlen \textit{p} und \textit{q}, die mindestens 512 Bit lang sind 2\textsuperscript{512} und geheim gehalten werden. Die Wahrscheinlichkeit, dass es sich um eine Primzahl handelt ist 2\textsuperscript{-9}. Um das faktorisieren zu erschweren gibt spezielle Kriterien. Erstens die Primzahlen sollten sich nicht sehr unterscheiden, aber nicht beieinander liegen. Für die Teilfremdezahl sollte man möglichst kleine Teiler haben.\\
+Als nächstes wird eine Zahl \textit{e}, enciphering, die teilfremd zu $\varphi(n)$ = (p - 1)(q - 1) ist, ausgewählt. Unter Teilfremd versteht man, dass die beiden Zahlen keinen gemeinsamen Teiler haben. Mit diesen beiden Zahlen kann der öffentliche Schlüssel (\textit{e, n}) gebildet werden. Damit der Empfänger die Nachricht entschlüsseln kann, benötigt er einen privaten Schlüssel \textit{d}. Die Zahl \textit{d} wird mit Hilfe des Euklidischen Algorithmus \textit{e * d mod (p - 1)(q - 1) = 1} berechnet.\\
+\textbf{RSA-Signatur}\\
+\grqq{}Mit Hilfe des RSA-Verfahrens kann man auch leicht eine digitale Signatur realisieren: Man bildet zunächst den Hashwert \textit{h = hash(m)} der zu signierenden Nachricht \textit{m}, und berechnet die Signatur, indem man diesen Hashwert 'entschlüsselt'.\grqq{}\citep{1}
+Um die Signatur zu prüfen, wird der Hash des Dokuments nochmal gebildet und \grqq{} dann der Wert \textit{sig} durch Potenzierung mit dem öffentlichen Schlüssel \textit{e} 'entschlüsselt' wird.\grqq{}\citep{1}.
+Wenn beide übereinstimmen war die Signatur korrekt.
+\citep{1}\citep{2}\citep{6}
 \subsubsection{Verschlüsseln}
 \label{sec:rsa-encrypt}
+Bei der Verschlüsselung wendet der Sender den öffentlichen Schlüssel des Empfängers an seinen Nachrichtenblock an.\\
+\textit{c} = \textit{m}\textsuperscript{e} (mod \textit{n})\\
+
 
 \subsubsection{Entschlüsseln}
 \label{sec:rsa-decrypt}
+Der Empfänger muss nur noch seinen privaten Schlüssel auf den Geheimtext \textit{c} zum Entschlüsseln anwenden.\\
+\textit{m} = \textit{c}\textsuperscript{d} (mod \textit{n})\\
 
 \section{SSL/TLS-Protokoll}
 \label{sec:ssl/tls-protocol}
