@@ -34,12 +34,6 @@
 Um nicht die eigentliche Nachricht zu übertragen, wendet man einen Schlüssel an, der aus der Nachricht einen sogennannten Chiffretext generiert. Der Empfänger dieses codierten Textes besitzt einen Dechiffrierschlüssel, um die Nachricht in ihren Ursprung zurück zu verwandeln. \grqq{}Dabei kann das Verhältnis zwischen den beiden benutzten Schlüsseln eine von zwei Ausprägungen annehmen, wir sprechen auch von sogenannten Verschlüsselungsarten.\grqq{}\cite{5} Der Standard wäre die symmetrische Verschlüsselung, wo das gleiche Geheimzweichen für das Ver- und Entschlüsseln benutzt wird. Ein Problem beim Austausch des symmetrischen Schlüssel ist, dass Mitlauschen anderer Teilnehmer.\\
 Für dieses Problem gibt es eine Lösung, die sogennannte asymmetrische Verschlüsselung. Hier gibt es für das en- und decoding einen eigene Chiffre. Wobei der Verschlüsselungskey für jeden zugänglich ist aber nur der, der den Entschlüsselungkey besitzt, ist in der Lage, die Nachricht zu entschlüsseln. \cite{1}
 
-\subsection{Sicherheitsziele}
-\label{sec:security goals}
-
-\subsection{Bedrohungsszenarien}
-\label{sec:threat scenarios}
-
 
 \section{Symmetrische Verschlüsselung}
 \label{sec:symetric-ciphering}
@@ -82,7 +76,7 @@ Beim Verschlüsselungsverfahren wird der Klartext in Blöcke umgewandelt, welche
 Da der 48 Bit Schlüssel, welcher vom 56 Bit-Hauptschlüssel hergeleitet wird, bei jeder Runde ein anderer ist, muss dieser irgendwie generiert werden. Dazu wird der Hauptschlüssel permutiert. Die Funktion PC-1 teilt diesen in 2 Blöcke zu je 28 Bit. Bei der Permutierung werden die 8 Paritätsbit entfernt, Bits mit der Nummer 8, 16, 24, 32, 40, 48, 56, 64, also bleiben noch 56 Bit übrig. Jede der beiden Hälften wird bei jeder Iteration zirkulärisch links für die Verschlüsselung und nach rechts für die Entschlüsselung gesshiftet. Das heißt, dass jeder Block entweder ein oder zwei Bit nach links rotiert und auf 24 Bit extrahiert wird. So kann es nicht vorkommen, dass ein Rundenschlüssel zweimal angewand wird.\\
 \grqq{}Nach 16 Runden werden die 64 Bit einer Ausgangspermutation unterzogen\grqq{}\cite{2}, woraus der Geheimtext resultiert. Die Ausgangspermutation ist die inverse von der Eingangspermutation. Alle 64 Bit Blöcke werden zu einem Geheimtext zusammengeführt. Nachteil dieser Implementierung ist, dass die Ein- und Ausgangspermutation öffentlich sind und so von Angreifern berechnet werden können, was die Sicherheit drastisch verringert. \cite{2}\cite{4}
 \begin{figure}[H]
-\includegraphics[width=0.40\textwidth]{Bilder/DES/DES_Schema}
+\includegraphics[width=0.30\textwidth]{Bilder/DES/DES_Schema}
 	\caption{DES-Verschlüsselung-Schema \cite{3}}
 	\label{fig5}
 \end{figure}
@@ -172,7 +166,7 @@ Eines der bekanntesten Public-Key-Verfahren ist der RSA-Algorithmus. Entwickelt 
 \subsubsection{Schlüsselerzeugung}
 \label{sec:key-generation}
 Für die Erzeugung des Schlüssels \textit{n} benötigt man das Produkt von zwei Primzahlen \textit{p} und \textit{q}, die mindestens 512 Bit lang sind 2\textsuperscript{512} und geheim sind. Die Wahrscheinlichkeit, dass es sich um eine Primzahl handelt ist 2\textsuperscript{-9}. Um das faktorisieren zu erschweren gibt es spezielle Faktoren. Erstens die Primzahlen sollten sich nicht zu sehr unterscheiden, aber auch nicht beieinander liegen. Für die Teilfremdezahl sollte man möglichst kleine Teiler haben. Als nächstes wird eine Zahl \textit{e}, enciphering, die teilfremd zu $\varphi(n)$ = (p - 1)(q - 1) ist, ausgewählt. Unter Teilfremd versteht man, dass beiden Zahlen keinen gemeinsamen Teiler haben. Mit diesen Zahlen wird der öffentliche Schlüssel (\textit{e, n}) gebildet. Damit der Empfänger die Nachricht entschlüsseln kann, benötigt er den privaten Schlüssel \textit{d}. Die Zahl \textit{d} wird mit Hilfe des Euklidischen Algorithmus \textit{e * d mod (p - 1)(q - 1) = 1} berechnet.\\\\
-\noindent
+\noindent\\\\
 \textbf{RSA-Signatur}\\
 \grqq{}Mit Hilfe des RSA-Verfahrens kann man leicht eine digitale Signatur realisieren: Man bildet zunächst den Hashwert \textit{h = hash(m)}, der zu signierenden Nachricht \textit{m}, und berechnet die Signatur, indem man diesen Hashwert 'entschlüsselt'.\grqq{}\cite{1}
 Um die Signatur zu prüfen, wird der Hash des Dokuments nochmals gebildet und \grqq{} dann der Wert \textit{sig} durch Potenzierung mit dem öffentlichen Schlüssel \textit{e} 'entschlüsselt'.\grqq{}\cite{1}.
@@ -216,7 +210,7 @@ Die zur Auswahl stehenden Protokolle werden beim SSL-Handshake vor der Kommunika
 \grqq{}Das SSL-Change-Cipher-Spec-Protocol bereitet die ausgehandelten Protokolle vor bzw inizialisiert Sie.\grqq{}\cite{6}
 \cite{6}
 \begin{figure}[H]
-\includegraphics[width=0.40\textwidth]{Bilder/TLS/SSLTLS-TCPIP}
+\includegraphics[width=0.30\textwidth]{Bilder/TLS/SSLTLS-TCPIP}
 	\caption{Bestandteile des SSL-Protokolls \cite{1}}
 	\label{fig14}
 \end{figure}
@@ -267,8 +261,6 @@ Der SSL Handshake verwendet die asymmetrische Verschlüsselung. In diesem System
 \noindent
 \textbf{Hybride Verschlüsselung}\\
 Da die Ver- und Entschlüsselung beim asymmetrischen Verfahren zeitaufwändig ist, verwendet man stattdessen das hybride Verfahren. Bei der hybriden Verschlüsselung, wird der symmetrische Schlüssel, zufällig generiert, durch den Public Key vom asymmetrischen Verfahren verschlüsselt. Der zu übertragenede Nachrichtenblock wird mit dem symmetrischen Schlüssel verschlüsselt. Diese Art nennt man hybride Verschlüsselung, da beide Verschlüsselungsarten übertragen werden. Ein Vorteil, die Daten werden schnell und effizient übertragen. Durch das Aymmetrische wird der Key sicher zum Kommunikationspartner übermittelt. Mögliche Algorithmen wären RSA-AES-Verschlüsselung. \cite{3}\\\\
-
-
 % 1/ 1.5.7
 % 1/ 5.2
 % 5/ 6.6
@@ -294,7 +286,7 @@ OpenSSL ist die am häufigsten eingesetzte TLS-Bibliothek. Doch ist die Biblioth
 \noindent
 \textbf{Angriff auf den TLS-Handshake}\\
 Der Heartbleed ist ein Angriff, bei dem alle Daten von dem TLS-Server ausgelesen werden konnten. Grund dafür war eine Fehlimplementierung in der Heartbeat-Funktion, die auf TLS over UDP ausgelegt ist. Um zu kontrollieren ob der Kommunikationspartner noch aktiv ist, schickt der Server eine Anfrage, beidem vom Partner eine 5 Zeichen große Antwort, nähmlich 'Hello', gefordert ird. Um vom Server geheime Daten zu erhalten, sendet der Angreifer einen Response, wo der Server aufgefordert wird z.B. 55.555 Zeichen zurückzusenden. Er bekam nicht nur das Hello, sondern weitere 55.550 Bytes. Erst eine Neucompilierung des Sourcecodes, beseitigte den Fehler.\\\\
-\noindent
+\noindent\\\\
 \textbf{Angriff auf den Handshake}\\
 Beim Bleichenbacher Angriff handelt es sich um eine Seitenkanal-Attacke. Diese nutzt Information, um eine Analyse des kryptischen Verfahren zu betreiben. Man fängt den ClientKeyExchange, mit der RSA codierten Nachricht, ab und sendet es an den angreifenden Server. Der Server entschlüsselt die Nachricht und überprüft die ersten zwei Byte, die entweder eine Alert Meldung 1 werfen. Wenn die ersten zwei Byte nicht 0x00 0x02 sind oder eine zweite Fehlermeldung geworfen wird, hilft das dem Angreifer das suchende Intervall Premaster Secret zu verkleinern, bis nur noch eine Zahl übrigbleibt. Durch Softwareanpassung in den Frameworks, wurde die Software optimiert.\\\\
 \noindent
