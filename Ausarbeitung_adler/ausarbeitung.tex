@@ -98,7 +98,7 @@ Da der DES-Algorithmus aus einen verhältnismäßig kurzen 56-Bit Schlüssel bes
 Der Unterschied zum DES ist, dass AES eine flexible Block- und Schlüssellänge besitzt. AES besitzt eine Standardmäßige Blocklänge von 128 Bit und Schlüssellängen von 128 Bit, 192 Bit und 256 Bit. Wieviele Runden absolviert werden hängt von der Schlüssellänge ab. Derzeitiger Standard 10 Runden bei einer Schlüssellänge von 128 Bit, 12 Runden bei 192 Bit und 14 Runden bei 256 Bit. \grqq{}Vor der ersten Runde wird ein Rundenschlüssel mit dem Klartext XOR-verknüpft.\grqq{}\cite{2} \cite{3}
 \begin{figure}[H]
 \includegraphics[width=0.55\textwidth]{Bilder/AES/AES_Schema}
-	\caption{Schema des AES \cite{2}}
+	\caption{Schema des AES \cite{3}}
 	\label{fig6}
 \end{figure}
 \noindent 
@@ -156,6 +156,9 @@ Nach den ersten 8 Runden, kommen wir nun zur letzten, der 9ten Runde, in der der
 \noindent
 Die Entschlüsselung funktioniert wird die Verschlüsselung nur umgekehrt in die andere Richtung. Die Teilschlüssel k{\scriptsize 9,x} werden invertiert. \cite{3}
 % Kryptograhie und IT-Sicherheit 2.3
+
+\section{Asymmetrische Verschlüsselung}
+\label{sec:asymetric-ciphering}
 
 \subsection{Der RSA-Algorithmus}
 \label{sec:rsa-algorithmus}
@@ -281,7 +284,7 @@ Zum Ableiten von Master Secret aus Premaster Secret, benötigen wir die Pseudozu
 
 \subsection{Buffer Ovrflow}
 \label{sec:buffer-overflow}
-Einem Buffer ist nur ein begrenzter Speicher zugewiesen. Ein Buffer Overflow tritt auf, wenn ein Programm versucht mehr Daten in den Speicher zu schreiben als vorhanden ist. Das kann auftreten, wenn die Übergabelänge nicht überprüft wurde. Die zusätzliche nicht gespeicherte Information, überschreibt gültige Daten. Bei dieser Attacke versucht der Angreifer seinen eigenen Code oder spezielle Prozesse auszuführen. GENAUER \cite{9}
+Einem Buffer ist nur ein begrenzter Speicher zugewiesen. Ein Buffer Overflow tritt auf, wenn ein Programm versucht mehr Daten in den Speicher zu schreiben als vorhanden ist. Das kann auftreten, wenn die Übergabelänge nicht überprüft wurde. Die zusätzliche nicht gespeicherte Information, überschreibt gültige Daten. Bei dieser Attacke versucht der Angreifer seinen eigenen Code oder spezielle Prozesse auszuführen. \cite{9}
 % 8. Improving Intrusion Detection Systems 4.3
 % 9. Network Intrusion Detection and Prevention 1.3.1
 
